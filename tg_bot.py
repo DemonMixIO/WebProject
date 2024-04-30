@@ -28,16 +28,9 @@ async def tg_astrology_select_sign(update, context):
     await update.message.reply_text('Выберите знак зодиака:', reply_markup=reply_markup)
 
 
-async def tg_astrology_get_goroscope(update, context):
-    url = "https://newastro.vercel.app/"
-    payload = {
-        "date": (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),
-        "lang": "ru",
-        "sign": update.message.text
-    }
-    response = requests.post(url, json=payload)
-    caption = response.json()['horoscope'].split(' - ', 1)[1].replace('.', '. '.replace(' -', ' - '))
-    await context.bot.send_photo(chat_id=update.message.chat_id, photo=response.json()['icon'], caption=caption)
+async def tg_astrology_get_horoscope(update, context):
+    caption, image = astrology_get_horoscope(update.message.text)
+    await context.bot.send_photo(chat_id=update.message.chat_id, photo=image, caption=caption)
 
 
 async def tg_info(update, context):
@@ -81,15 +74,7 @@ async def tg_timer(update, context):
 
 
 async def tg_handle_dice_roll(update, context):
-    query = update.message.text
-    if query == '1x6':
-        result = random.randint(1, 6)
-    elif query == '2x6':
-        result = f"{random.randint(1, 6)}, {random.randint(1, 6)}"
-    elif query == '1x20':
-        result = random.randint(1, 20)
-    else:
-        return
+    result = handle_dice_roll(update.message.text)
     await update.message.reply_text(f"Результат: {result}")
 
 
@@ -137,7 +122,7 @@ def tg_launch():
     tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))
     tg_application.add_handler(MessageHandler(filters.Regex(
         '^(Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)$'),
-        tg_astrology_get_goroscope))
+        tg_astrology_get_horoscope))
     tg_application.run_polling()
 
 
