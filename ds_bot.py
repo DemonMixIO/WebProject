@@ -74,6 +74,21 @@ async def ds_date(ctx):
     await ctx.send(result)
 
 
+@bot.command(name='commands')
+async def ds_help(ctx):
+    help_text = """
+!date - получить текущую дату
+!time - получить текущее время
+!cat - получить случайное изображение кота
+!dog - получить случайное изображение собаки
+!horoscope <знак зодиака> - получить прогноз на день
+!dice <кол-во костей>x<кол-во граней> - бросить кости
+!wiki <запрос> - получить краткую информацию с Википедии
+!set_timer <hours> <minutes> <seconds> - запустить таймер
+    """
+    await ctx.send(help_text)
+
+
 if __name__ == '__main__':
     bot.run(DS_TOKEN)
     print('print')

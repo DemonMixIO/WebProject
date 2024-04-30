@@ -108,6 +108,25 @@ async def tg_get_random_dog_pic(update, context):
     img = get_random_dog_pic()
     await context.bot.send_photo(chat_id=update.message.chat_id, photo=img)
 
+async def tg_command_dice(update, context):
+    query = " ".join(context.args)
+    if not query:
+        await update.message.reply_text('Отправьте сообщение в формате: /dice <кол-во костей>x<кол-во граней>')
+        return
+    await update.message.reply_text(handle_dice_roll(query))
+
+
+async def tg_help(update, context):
+    text = '''
+/cat - получить случайное изображение кота
+/dog - получить случайное изображение собаки
+/time - получить текущее время
+/date - получить текущую дату
+/wiki <запрос> - получить краткую информацию с Википедии
+/dice <кол-во костей>x<кол-во граней> - бросить кости
+    '''
+    await update.message.reply_text(text)
+
 
 def tg_launch(token):
     print('telegram bot started')
@@ -115,6 +134,10 @@ def tg_launch(token):
     tg_application.add_handler(CommandHandler("wiki", tg_get_wiki_summary))
     tg_application.add_handler(CommandHandler("cat", tg_get_random_cat_pic))
     tg_application.add_handler(CommandHandler("dog", tg_get_random_dog_pic))
+    tg_application.add_handler(CommandHandler("date", tg_date))
+    tg_application.add_handler(CommandHandler("time", tg_time))
+    tg_application.add_handler(CommandHandler("dice", tg_command_dice))
+    tg_application.add_handler(CommandHandler("help", tg_help))
     tg_application.add_handler(MessageHandler(filters.Regex('Старт'), tg_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Назад'), tg_back_to_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))
