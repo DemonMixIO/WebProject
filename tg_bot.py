@@ -7,8 +7,7 @@ from telegram import ReplyKeyboardMarkup
 from telegram.ext import Application, MessageHandler, filters, CommandHandler
 
 from logic import *
-
-TG_BOT_TOKEN = '7160249519:AAHlmU8Giwfpq9VJ9kpuliWtJeDzV6G3fII'
+from tokens import TG_TOKEN
 
 
 async def tg_get_wiki_summary(update, context):
@@ -116,7 +115,7 @@ async def tg_get_random_dog_pic(update, context):
 
 
 def tg_launch():
-    tg_application = Application.builder().token(TG_BOT_TOKEN).build()
+    tg_application = Application.builder().token(TG_TOKEN).build()
     tg_application.add_handler(CommandHandler("wiki", tg_get_wiki_summary))
     tg_application.add_handler(CommandHandler("cat", tg_get_random_cat_pic))
     tg_application.add_handler(CommandHandler("dog", tg_get_random_dog_pic))
