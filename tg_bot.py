@@ -105,9 +105,21 @@ async def tg_back_to_start(update, context):
     await tg_start(update, context)
 
 
+async def tg_get_random_cat_pic(update, context):
+    img = get_random_cat_pic()
+    await context.bot.send_photo(chat_id=update.message.chat_id, photo=img)
+
+
+async def tg_get_random_dog_pic(update, context):
+    img = get_random_dog_pic()
+    await context.bot.send_photo(chat_id=update.message.chat_id, photo=img)
+
+
 def tg_launch():
     tg_application = Application.builder().token(TG_BOT_TOKEN).build()
     tg_application.add_handler(CommandHandler("wiki", tg_get_wiki_summary))
+    tg_application.add_handler(CommandHandler("cat", tg_get_random_cat_pic))
+    tg_application.add_handler(CommandHandler("dog", tg_get_random_dog_pic))
     tg_application.add_handler(MessageHandler(filters.Regex('Старт'), tg_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Назад'), tg_back_to_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))

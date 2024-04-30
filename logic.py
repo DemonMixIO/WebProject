@@ -62,3 +62,27 @@ def handle_timer(query):
     else:
         return
     return seconds
+
+
+def get_random_dog_pic():
+    try:
+        response = requests.get('https://dog.ceo/api/breeds/image/random')
+        if response.status_code == 200:
+            json_response = response.json()
+            dog_pic_url = json_response['message']
+            return dog_pic_url
+    except Exception as e:
+        print(f"Ошибка при получении картинки с собакой: {e}")
+    return None
+
+
+def get_random_cat_pic():
+    try:
+        response = requests.get('https://api.thecatapi.com/v1/images/search')
+        if response.status_code == 200:
+            json_response = response.json()
+            cat_pic_url = json_response[0]['url']
+            return cat_pic_url
+    except Exception as e:
+        print(f"Ошибка при получении картинки с котиком: {e}")
+    return None
