@@ -93,4 +93,4 @@ def date():
 
 
 def time():
-    datetime.datetime.now().strftime('%H:%M:%S')
+    return datetime.datetime.now().strftime('%H:%M:%S')
