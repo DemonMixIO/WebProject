@@ -43,17 +43,22 @@ def astrology_get_horoscope(sign):
 
 def handle_dice_roll(query):
     result = []
-    if query == '1x6':
-        result = random.randint(1, 6)
-    elif query == '2x6':
-        result = f"{random.randint(1, 6)}, {random.randint(1, 6)}"
-    elif query == '1x20':
-        result = random.randint(1, 20)
-    else:
-        if 'x' in query:
-            splq = query.split('x')
-            if len(splq) == 2:
-                if splq[0].isdigit() and splq[1].isdigit():
-                    for i in range(int(splq[0])):
-                        result.append(random.randint(1, int(splq[1])))
+    if 'x' in query:
+        splq = query.split('x')
+        if len(splq) == 2:
+            if splq[0].isdigit() and splq[1].isdigit():
+                for i in range(int(splq[0])):
+                    result.append(str(random.randint(1, int(splq[1]))))
     return ', '.join(result)
+
+
+def handle_timer(query):
+    if query == '30 секунд':
+        seconds = 30
+    elif query == '1 минута':
+        seconds = 60
+    elif query == '5 минут':
+        seconds = 300
+    else:
+        return
+    return seconds

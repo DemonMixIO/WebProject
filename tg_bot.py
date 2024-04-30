@@ -4,11 +4,19 @@ import random
 
 import requests
 from telegram import ReplyKeyboardMarkup
-from telegram.ext import Application, MessageHandler, filters
+from telegram.ext import Application, MessageHandler, filters, CommandHandler
 
 from logic import *
 
 TG_BOT_TOKEN = '7160249519:AAHlmU8Giwfpq9VJ9kpuliWtJeDzV6G3fII'
+
+
+async def tg_get_wiki_summary(update, context):
+    query = " ".join(context.args)
+    if not query:
+        await update.message.reply_text('Отправьте сообщение в формате: /wiki <запрос>')
+        return
+    await update.message.reply_text(get_wiki_summary(query))
 
 
 async def tg_start(update, context):
@@ -34,7 +42,7 @@ async def tg_astrology_get_horoscope(update, context):
 
 
 async def tg_info(update, context):
-    keyboard = [['Узнать дату📅', 'Узнать время⌚'], ['Назад']]
+    keyboard = [['Узнать дату📅', 'Узнать время⌚', '/wiki'], ['Назад']]
     reply_markup = ReplyKeyboardMarkup(keyboard)
     await update.message.reply_text('Выберите действие:', reply_markup=reply_markup)
 
@@ -80,25 +88,17 @@ async def tg_handle_dice_roll(update, context):
 
 async def tg_handle_timer(update, context):
     query = update.message.text
-    if query == '30 секунд':
-        seconds = 30
-    elif query == '1 минута':
-        seconds = 60
-    elif query == '5 минут':
-        seconds = 300
+    seconds = handle_timer(update.message.text)
+    if seconds:
+        keyboard = [['Жду...']]
+        reply_markup = ReplyKeyboardMarkup(keyboard)
+        await update.message.reply_text(f'Таймер запущен: {query}. Жди🙂', reply_markup=reply_markup)
+        await asyncio.sleep(seconds)
+        await update.message.reply_text(f"{query} истекло")
+        await tg_timer(update, context)
     else:
-        return
-    keyboard = [['Жду...']]
-    reply_markup = ReplyKeyboardMarkup(keyboard)
-    await update.message.reply_text(f'Таймер запущен: {query}. Жди🙂', reply_markup=reply_markup)
-    await asyncio.sleep(seconds)
-    await update.message.reply_text(f"{query} истекло")
-    await tg_timer(update, context)
-
-
-async def tg_close_timer(update, context):
-    await update.message.reply_text('Таймер сброшен.')
-    await tg_timer(update, context)
+        await update.message.reply_text(f"Неверное время: {query}")
+        await tg_timer(update, context)
 
 
 async def tg_back_to_start(update, context):
@@ -107,19 +107,19 @@ async def tg_back_to_start(update, context):
 
 def tg_launch():
     tg_application = Application.builder().token(TG_BOT_TOKEN).build()
+    tg_application.add_handler(CommandHandler("wiki", tg_get_wiki_summary))
     tg_application.add_handler(MessageHandler(filters.Regex('Старт'), tg_start))
-    tg_application.add_handler(MessageHandler(filters.Regex('Игровой помощник'), tg_player_start))
-    tg_application.add_handler(MessageHandler(filters.Regex('Информация ℹ'), tg_info))
+    tg_application.add_handler(MessageHandler(filters.Regex('Назад'), tg_back_to_start))
+    tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))
     tg_application.add_handler(MessageHandler(filters.Regex('Астрология🔮'), tg_astrology))
+    tg_application.add_handler(MessageHandler(filters.Regex('Информация ℹ'), tg_info))
     tg_application.add_handler(MessageHandler(filters.Regex('Узнать дату📅'), tg_date))
     tg_application.add_handler(MessageHandler(filters.Regex('Узнать время⌚'), tg_time))
     tg_application.add_handler(MessageHandler(filters.Regex('Бросить кубик🎲'), tg_dice))
-    tg_application.add_handler(MessageHandler(filters.Regex('Установить таймер⏲'), tg_timer))
-    tg_application.add_handler(MessageHandler(filters.Regex('Закрыть❌'), tg_close_timer))
     tg_application.add_handler(MessageHandler(filters.Regex('^(1x6|2x6|1x20)$'), tg_handle_dice_roll))
+    tg_application.add_handler(MessageHandler(filters.Regex('Игровой помощник'), tg_player_start))
+    tg_application.add_handler(MessageHandler(filters.Regex('Установить таймер⏲'), tg_timer))
     tg_application.add_handler(MessageHandler(filters.Regex('^(30 секунд|1 минута|5 минут)$'), tg_handle_timer))
-    tg_application.add_handler(MessageHandler(filters.Regex('Назад'), tg_back_to_start))
-    tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))
     tg_application.add_handler(MessageHandler(filters.Regex(
         '^(Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces)$'),
         tg_astrology_get_horoscope))
