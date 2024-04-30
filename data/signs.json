@@ -1,0 +1,62 @@
+[
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-1.png",
+    "id": 1,
+    "name": "Aries"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-2.png",
+    "id": 2,
+    "name": "Taurus"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-3.png",
+    "id": 3,
+    "name": "Gemini"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-4.png",
+    "id": 4,
+    "name": "Cancer"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-5.png",
+    "id": 5,
+    "name": "Leo"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-6.png",
+    "id": 6,
+    "name": "Virgo"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-7.png",
+    "id": 7,
+    "name": "Libra"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-8.png",
+    "id": 8,
+    "name": "Scorpio"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-9.png",
+    "id": 9,
+    "name": "Sagittarius"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-10.png",
+    "id": 10,
+    "name": "Capricorn"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-11.png",
+    "id": 11,
+    "name": "Aquarius"
+  },
+  {
+    "icon": "https://newastro.vercel.app/static/assets/zodiac-12.png",
+    "id": 12,
+    "name": "Pisces"
+  }
+]
