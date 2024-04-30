@@ -86,3 +86,11 @@ def get_random_cat_pic():
     except Exception as e:
         print(f"Ошибка при получении картинки с котиком: {e}")
     return None
+
+
+def date():
+    return datetime.datetime.now().strftime('%d.%m.%Y')
+
+
+def time():
+    datetime.datetime.now().strftime('%H:%M:%S')

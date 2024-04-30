@@ -1,8 +1,5 @@
 import asyncio
-import datetime
-import random
 
-import requests
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import Application, MessageHandler, filters, CommandHandler
 
@@ -47,13 +44,11 @@ async def tg_info(update, context):
 
 
 async def tg_date(update, context):
-    """Отправляет дату, когда получена команда /date"""
-    await update.message.reply_text(datetime.datetime.now().strftime('%d.%m.%Y'))
+    await update.message.reply_text(date)
 
 
 async def tg_time(update, context):
-    """Отправляет текущее время, когда получена команда /time"""
-    await update.message.reply_text(datetime.datetime.now().strftime('%H:%M:%S'))
+    await update.message.reply_text(time)
 
 
 async def tg_astrology(update, context):
@@ -114,8 +109,9 @@ async def tg_get_random_dog_pic(update, context):
     await context.bot.send_photo(chat_id=update.message.chat_id, photo=img)
 
 
-def tg_launch():
-    tg_application = Application.builder().token(TG_TOKEN).build()
+def tg_launch(token):
+    print('telegram bot started')
+    tg_application = Application.builder().token(token).build()
     tg_application.add_handler(CommandHandler("wiki", tg_get_wiki_summary))
     tg_application.add_handler(CommandHandler("cat", tg_get_random_cat_pic))
     tg_application.add_handler(CommandHandler("dog", tg_get_random_dog_pic))
@@ -138,4 +134,4 @@ def tg_launch():
 
 
 if __name__ == '__main__':
-    tg_launch()
+    tg_launch(TG_TOKEN)

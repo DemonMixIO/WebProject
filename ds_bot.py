@@ -51,5 +51,23 @@ async def ds_get_random_dog_pic(ctx):
     await ctx.send(result)
 
 
+@bot.command(name='horoscope')
+async def ds_get_horoscope(ctx, sign=''):
+    if not sign:
+        await ctx.send('Отправьте сообщение в формате: !horoscope <знак зодиака>')
+        return
+    horoscope, image = astrology_get_horoscope(sign)
+    if horoscope and image:
+        await ctx.send(image)
+        await ctx.send(horoscope)
+
+
+@bot.command(name='time')
+async def ds_time(ctx):
+    result = time()
+    await ctx.send(result)
+
+
 if __name__ == '__main__':
     bot.run(DS_TOKEN)
+    print('print')
