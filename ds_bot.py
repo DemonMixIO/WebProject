@@ -68,6 +68,12 @@ async def ds_time(ctx):
     await ctx.send(result)
 
 
+@bot.command(name='date')
+async def ds_date(ctx):
+    result = date()
+    await ctx.send(result)
+
+
 if __name__ == '__main__':
     bot.run(DS_TOKEN)
     print('print')

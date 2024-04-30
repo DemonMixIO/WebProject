@@ -38,7 +38,7 @@ async def tg_astrology_get_horoscope(update, context):
 
 
 async def tg_info(update, context):
-    keyboard = [['Узнать дату📅', 'Узнать время⌚', '/wiki'], ['Назад']]
+    keyboard = [['Узнать дату📅', 'Узнать время⌚', '/wiki'], ['/cat', '/dog', 'Назад']]
     reply_markup = ReplyKeyboardMarkup(keyboard)
     await update.message.reply_text('Выберите действие:', reply_markup=reply_markup)
 
