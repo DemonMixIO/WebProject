@@ -91,4 +91,3 @@ async def ds_help(ctx):
 
 if __name__ == '__main__':
     bot.run(DS_TOKEN)
-    print('print')
