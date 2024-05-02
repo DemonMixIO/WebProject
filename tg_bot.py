@@ -44,11 +44,11 @@ async def tg_info(update, context):
 
 
 async def tg_date(update, context):
-    await update.message.reply_text(date)
+    await update.message.reply_text(date())
 
 
 async def tg_time(update, context):
-    await update.message.reply_text(time)
+    await update.message.reply_text(time())
 
 
 async def tg_astrology(update, context):
