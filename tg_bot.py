@@ -108,6 +108,7 @@ async def tg_get_random_dog_pic(update, context):
     img = get_random_dog_pic()
     await context.bot.send_photo(chat_id=update.message.chat_id, photo=img)
 
+
 async def tg_command_dice(update, context):
     query = " ".join(context.args)
     if not query:
