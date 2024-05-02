@@ -139,7 +139,7 @@ def tg_launch(token):
     tg_application.add_handler(CommandHandler("time", tg_time))
     tg_application.add_handler(CommandHandler("dice", tg_command_dice))
     tg_application.add_handler(CommandHandler("help", tg_help))
-    tg_application.add_handler(MessageHandler(filters.Regex('Старт'), tg_start))
+    tg_application.add_handler(CommandHandler('start', tg_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Назад'), tg_back_to_start))
     tg_application.add_handler(MessageHandler(filters.Regex('Гороскоп⛎'), tg_astrology_select_sign))
     tg_application.add_handler(MessageHandler(filters.Regex('Астрология🔮'), tg_astrology))
